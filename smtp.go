@@ -69,6 +69,7 @@ func messageData(subject, body, from string, html bool) []byte {
 	buf.WriteString(from)
 
 	// allow utf-8 characters in the subject as specified in RFC 1342
+	// http://ncona.com/2011/06/using-utf-8-characters-on-an-e-mail-subject
 	buf.WriteString("\nSubject: =?utf-8?B?")
 	buf.WriteString(base64.StdEncoding.EncodeToString([]byte(subject)))
 	buf.WriteString("?=")
@@ -76,7 +77,7 @@ func messageData(subject, body, from string, html bool) []byte {
 	buf.WriteString("\nMIME-version: 1.0;")
 	buf.WriteString("\nContent-Type: text/")
 	buf.WriteString(contentType(html))
-	buf.WriteString("; charset=\"UTF-8\";\n\n")
+	buf.WriteString("; charset=UTF-8;\n\n")
 	buf.WriteString(body)
 	return buf.Bytes()
 }
